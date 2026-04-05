@@ -1,0 +1,53 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "type": "java",
+        "name": "Test",
+        "request": "launch",
+        "mainClass": "Test",
+        "projectName": "PA4_829fe7c5"
+    },
+    {
+        "type": "java",
+        "name": "MainClass",
+        "request": "launch",
+        "mainClass": "MainClass",
+        "projectName": "PA4_829fe7c5"
+    },
+    {
+        "name": "Debug with Soot",
+        "type": "java",
+        "request": "launch",
+        "mainClass": "MainClass",
+        "projectName": "PA4",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "stopOnEntry": false,
+        "args": "",
+        "vmArgs": "-Xmx1024m",
+        "preLaunchTask": "java: build",
+        "presentation": {
+            "echo": true,
+            "reveal": "always",
+            "focus": false,
+            "panel": "shared"
+        }
+    },
+    {
+        "name": "Debug Soot Verbose",
+        "type": "java",
+        "request": "launch",
+        "mainClass": "MainClass",
+        "projectName": "PA4",
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "stopOnEntry": false,
+        "vmArgs": "-Xmx1024m -verbose:class",
+        "presentation": {
+            "reveal": "always",
+            "panel": "shared"
+        }
+    }
+]
+}
