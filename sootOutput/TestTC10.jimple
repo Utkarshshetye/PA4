@@ -1,0 +1,23 @@
+class TestTC10 extends java.lang.Object
+{
+
+    void <init>()
+    {
+        TestTC10 r0;
+
+        r0 := @this: TestTC10;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public int foo()
+    {
+        TestTC10 r0;
+
+        r0 := @this: TestTC10;
+
+        return 16;
+    }
+}

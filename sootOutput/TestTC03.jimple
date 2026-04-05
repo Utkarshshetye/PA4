@@ -1,0 +1,34 @@
+class TestTC03 extends java.lang.Object
+{
+
+    void <init>()
+    {
+        TestTC03 r0;
+
+        r0 := @this: TestTC03;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public int foo()
+    {
+        TestTC03 r0;
+        byte b0;
+
+        r0 := @this: TestTC03;
+
+        goto label1;
+
+        b0 = 16;
+
+        goto label2;
+
+     label1:
+        b0 = 4;
+
+     label2:
+        return b0;
+    }
+}

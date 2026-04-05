@@ -1,0 +1,52 @@
+public class Test15 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        Test15 r0;
+
+        r0 := @this: Test15;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $r1;
+        Test2TC15 $r3, $r4;
+        java.lang.String[] r2;
+        int i0, $i0, $i1;
+        TestTC15 $r0;
+
+        r2 := @parameter0: java.lang.String[];
+
+        $r0 = new TestTC15;
+
+        specialinvoke $r0.<TestTC15: void <init>()>();
+
+        $r3 = new Test2TC15;
+
+        specialinvoke $r3.<Test2TC15: void <init>()>();
+
+        $i0 = virtualinvoke $r3.<TestTC15: int bar(int)>(7);
+
+        $r4 = new Test2TC15;
+
+        specialinvoke $r4.<Test2TC15: void <init>()>();
+
+        $i1 = virtualinvoke $r4.<Test2TC15: int bar(int)>($i0);
+
+        goto label1;
+
+     label1:
+        i0 = $i1;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(int)>(i0);
+
+        return;
+    }
+}

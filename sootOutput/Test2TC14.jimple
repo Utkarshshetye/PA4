@@ -1,0 +1,26 @@
+class Test2TC14 extends TestTC14
+{
+
+    void <init>()
+    {
+        Test2TC14 r0;
+
+        r0 := @this: Test2TC14;
+
+        specialinvoke r0.<TestTC14: void <init>()>();
+
+        return;
+    }
+
+    public int bar(int)
+    {
+        int i0;
+        Test2TC14 r0;
+
+        r0 := @this: Test2TC14;
+
+        i0 := @parameter0: int;
+
+        return i0;
+    }
+}

@@ -10,7 +10,7 @@ public class MainClass {
         Options.v().set_keep_line_number(true);
 
         // 2. Add your transformer to the "wjtp" pack
-        SceneTransformer sceneTransformer = new MethodInlining1();
+        SceneTransformer sceneTransformer = new MethodInlining();
         PackManager.v().getPack("wjtp").add(new Transform("wjtp.MethodInlining", sceneTransformer));
 
         // 3. Prepare arguments
@@ -28,7 +28,12 @@ public class MainClass {
                 "-exclude", "jdk.*",
                 "-f", "J",
                 "-t", "1",
-                "Test"
+                "-p", "jop", "enabled:false",
+                "-p", "jtp", "enabled:false",
+                "-p", "jb.cp", "enabled:false",
+                "-p", "jb.dae", "enabled:false",
+                "-p", "jb.uce", "enabled:false",
+                args[0]
         };
 
         // 4. Just call main. It will parse args, load classes, and run the packs.

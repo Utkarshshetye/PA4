@@ -1,0 +1,58 @@
+class TestTC02 extends java.lang.Object
+{
+
+    void <init>()
+    {
+        TestTC02 r0;
+
+        r0 := @this: TestTC02;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public int foo()
+    {
+        int i0, $i0, $i1, $i2, $i3;
+        TestTC02 $r0, r1, $r1;
+
+        r1 := @this: TestTC02;
+
+        $r0 = new TestTC02;
+
+        specialinvoke $r0.<TestTC02: void <init>()>();
+
+        $r1 = $r0;
+
+        $i2 = 1;
+
+        $i0 = 2;
+
+        $i1 = 3;
+
+        $i3 = $i0 + $i1;
+
+        i0 = $i3;
+
+        return i0;
+    }
+
+    public int bar(int, int, int)
+    {
+        int i0, i1, i2, i3;
+        TestTC02 r0;
+
+        r0 := @this: TestTC02;
+
+        i2 := @parameter0: int;
+
+        i0 := @parameter1: int;
+
+        i1 := @parameter2: int;
+
+        i3 = i0 + i1;
+
+        return i3;
+    }
+}

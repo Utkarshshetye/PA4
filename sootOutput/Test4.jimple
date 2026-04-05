@@ -1,0 +1,52 @@
+public class Test4 extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        Test4 r0;
+
+        r0 := @this: Test4;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $r1;
+        byte $b0;
+        int i0;
+        TestTC04 $r0, $r2;
+        java.lang.String[] r2;
+
+        r2 := @parameter0: java.lang.String[];
+
+        $r0 = new TestTC04;
+
+        specialinvoke $r0.<TestTC04: void <init>()>();
+
+        $r2 = $r0;
+
+        goto label1;
+
+        $b0 = 30;
+
+        goto label1;
+
+        $b0 = 10;
+
+        goto label1;
+
+        $b0 = 0;
+
+     label1:
+        i0 = $b0;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(int)>(i0);
+
+        return;
+    }
+}

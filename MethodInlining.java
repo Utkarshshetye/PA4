@@ -16,7 +16,7 @@ import soot.util.Chain;
 import soot.jimple.toolkits.callgraph.*;
 import soot.javaToJimple.DefaultLocalGenerator;
 
-public class MethodInlining1 extends SceneTransformer {
+public class MethodInlining extends SceneTransformer {
     // Key: ClassName.MethodName, Value: Methods that called from current method
     Map<String, List<SootMethod>> methodMap = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class MethodInlining1 extends SceneTransformer {
         CallGraph cg = Scene.v().getCallGraph();
 
         for (SootClass sc : Scene.v().getApplicationClasses()) {
-            for (SootMethod sm: sc.getMethods()) {
+            for (SootMethod sm : sc.getMethods()) {
                 String key = sc.getName() + "." + sm.getName();
 
                 List<SootMethod> totalCallees = new LinkedList<>();
@@ -42,7 +42,9 @@ public class MethodInlining1 extends SceneTransformer {
                     while (edges.hasNext()) {
                         SootMethod tgt = edges.next().tgt();
 
-                        if (tgt == null || tgt.isJavaLibraryMethod() || tgt.isConstructor() || tgt.isStaticInitializer()) continue;
+                        if (tgt == null || tgt.isJavaLibraryMethod() || tgt.isConstructor()
+                                || tgt.isStaticInitializer())
+                            continue;
 
                         totalCallees.add(tgt);
                     }
@@ -57,19 +59,21 @@ public class MethodInlining1 extends SceneTransformer {
 
         Chain<SootClass> libraryClasses = Scene.v().getApplicationClasses();
 
-        for (SootClass sc: libraryClasses) {
+        for (SootClass sc : libraryClasses) {
 
             List<SootMethod> methods = sc.getMethods();
 
-            for (SootMethod sm: methods) {
+            for (SootMethod sm : methods) {
                 // ClassA.foo()
                 // ClassB.bar()
                 String key = sc.getName() + "." + sm.getName();
 
                 List<SootMethod> callees = methodMap.get(key);
 
-                if (!callees.isEmpty() && sm!= null && sm.hasActiveBody()) {
+                if (!callees.isEmpty() && sm != null && sm.hasActiveBody()) {
                     performInlining(sm, callees);
+                    // System.out.println(sm.getSignature());
+                    // System.out.println(sm.getActiveBody());
                 }
             }
         }
@@ -77,10 +81,10 @@ public class MethodInlining1 extends SceneTransformer {
 
     public void performInlining(SootMethod caller, List<SootMethod> callees) {
         // for (SootMethod callee: callees) {
-        //     if (canInline()) {
-        //        // Perform inlining
-        //        System.out.println(callees);
-        //     }
+        // if (canInline()) {
+        // // Perform inlining
+        // System.out.println(callees);
+        // }
         // }
 
         // Queue<SootMethod> q = new LinkedList<>();
@@ -88,30 +92,26 @@ public class MethodInlining1 extends SceneTransformer {
 
         Body callerBody = caller.retrieveActiveBody();
 
-        for (Iterator<Unit> it = callerBody.getUnits().snapshotIterator(); it.hasNext(); ) {
+        for (Iterator<Unit> it = callerBody.getUnits().snapshotIterator(); it.hasNext();) {
             Unit u = it.next();
             if (u instanceof Stmt) {
                 Stmt stmt = (Stmt) u;
 
                 if (stmt.containsInvokeExpr()) {
+                    CallGraph cg = Scene.v().getCallGraph();
+                    Iterator<Edge> edges = cg.edgesOutOf(stmt);
 
-                    InvokeExpr invokeExpr = stmt.getInvokeExpr();
+                    if (edges.hasNext()) {
+                        SootMethod callee = edges.next().tgt();
 
-                    SootMethod callee = invokeExpr.getMethod();
-
-                    if (callee!=null && callees.contains(callee) && callee.hasActiveBody()) {
-                        if (callee != caller) {
-                            // To avoid recursion
-                            performInliningAtCaller(callerBody, stmt, callee);
+                        // Inline only if there is a unique target and it has a body
+                        if (callee != null && !edges.hasNext() && callee.hasActiveBody()) {
+                            if (callee != caller) {
+                                performInliningAtCaller(callerBody, stmt, callee);
+                            }
                         }
                     }
-                    // List<Unit> clonedUnits = new ArrayList<>();
-                    // SootMethod currMethod = q.poll();
-                    // Chain<Unit> calleeCode = currMethod.retrieveActiveBody().getUnits();
-
-                    // callerBody.insertBefore(calleeCode, u);
                 }
-
             }
         }
     }
@@ -124,7 +124,7 @@ public class MethodInlining1 extends SceneTransformer {
         Body calleeBody = (Body) callee.retrieveActiveBody().clone();
 
         // Storing Local variable to new type variable
-        for (Local localVar:calleeBody.getLocals()) {
+        for (Local localVar : calleeBody.getLocals()) {
             Type localVarType = localVar.getType();
 
             Local newVar = dLocalGen.generateLocal(localVarType);
@@ -154,20 +154,20 @@ public class MethodInlining1 extends SceneTransformer {
                     if (invokeExpr instanceof InstanceInvokeExpr) {
                         InstanceInvokeExpr instanceInvokeExpr = (InstanceInvokeExpr) invokeExpr;
                         Value rcvr = instanceInvokeExpr.getBase();
-                        
+
                         AssignStmt assignStmt = Jimple.v().newAssignStmt(newName, rcvr);
-                        
+
                         modifiedUnits.add(assignStmt);
-                        
+
                         cUnit.redirectJumpsToThisTo(assignStmt);
                     }
                 } else if (rightOp instanceof ParameterRef) {
                     Value currParam = args.get(paramIdx);
-                   
+
                     AssignStmt assignStmt = Jimple.v().newAssignStmt(newName, currParam);
-                   
+
                     modifiedUnits.add(assignStmt);
-                   
+
                     cUnit.redirectJumpsToThisTo(assignStmt);
 
                     paramIdx++;
@@ -176,7 +176,7 @@ public class MethodInlining1 extends SceneTransformer {
 
             else {
                 // Use and Def
-                for (ValueBox value: cUnit.getUseAndDefBoxes()) {
+                for (ValueBox value : cUnit.getUseAndDefBoxes()) {
                     if (localMap.containsKey(value.getValue())) {
                         Value newName = localMap.get(value.getValue());
 
@@ -232,8 +232,8 @@ public class MethodInlining1 extends SceneTransformer {
 
             Chain<Unit> callerUnits = callerBody.getUnits();
 
-            for (Unit newUnit: modifiedUnits) {
-                callerUnits.insertBefore(newUnit , stmt);
+            for (Unit newUnit : modifiedUnits) {
+                callerUnits.insertBefore(newUnit, stmt);
             }
         }
 

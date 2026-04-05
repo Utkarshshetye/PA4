@@ -1,0 +1,42 @@
+class Test5 extends java.lang.Object
+{
+
+    void <init>()
+    {
+        Test5 r0;
+
+        r0 := @this: Test5;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $r1;
+        int i0;
+        java.lang.String[] r2;
+        TestTC10 $r0, $r2, $r3;
+
+        r2 := @parameter0: java.lang.String[];
+
+        $r0 = new TestTC10;
+
+        $r2 = $r0;
+
+        specialinvoke $r2.<java.lang.Object: void <init>()>();
+
+        nop;
+
+        $r3 = $r0;
+
+        i0 = 16;
+
+        $r1 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r1.<java.io.PrintStream: void println(int)>(i0);
+
+        return;
+    }
+}

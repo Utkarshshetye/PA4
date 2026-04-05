@@ -1,0 +1,29 @@
+class Test2TC15 extends TestTC15
+{
+
+    void <init>()
+    {
+        Test2TC15 r0;
+
+        r0 := @this: Test2TC15;
+
+        specialinvoke r0.<TestTC15: void <init>()>();
+
+        return;
+    }
+
+    public int bar(int)
+    {
+        int i0;
+        Test2TC15 r0;
+
+        r0 := @this: Test2TC15;
+
+        i0 := @parameter0: int;
+
+        goto label1;
+
+     label1:
+        return 10;
+    }
+}
