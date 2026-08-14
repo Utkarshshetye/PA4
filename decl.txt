@@ -1,0 +1,5 @@
+1) Use chatgpt to confirm our understanding on the use of Merge and Record startegies described in “Pick Your Context Well” by Smaragdakis et al. (2011), So that we can proceed in right direction.
+2) Use chatgpt to see some of the soot functions while implementation and how to include library function bodies.
+3) Use chatgpt for referring latex command while writing report.
+4) Use chatgpt to resolve exception coming due to incompatability issue of fop, xalan and luindex benchamark of tami-outs with jdk version more than 8 by setting "set_exclude" function of options.
+5) Use for how method clone (copy) is ceated in the soot, to understand the Soot API in detail.
